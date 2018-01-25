@@ -64,8 +64,14 @@ Vagrant.configure("2") do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+    setenforce 0
+    sed -i 's/SELINUX=enforcing/SELINUX=enforcing/g' /etc/selinux/config
+    swapoff -a
+    sed -i '/swap/s/^/#/g' /etc/fstab
+
     yum install -y screen tree telnet kubelet kubeadm docker --nogpgcheck
     systemctl enable kubelet && systemctl start kubelet
     systemctl enable docker && systemctl start docker
+    echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
   SHELL
 end
