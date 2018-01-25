@@ -63,14 +63,6 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    yum -y install epel-release 
-    yum -y update
-    yum -y install git net-tools wget
-    rm /home/vagrant/.ssh/authorized_keys
-    wget https://raw.githubusercontent.com/hashicorp/vagrant/master/keys/vagrant.pub -O /home/vagrant/.ssh/authorized_keys
-    chown -Rf vagrant:vagrant /home/vagrant/.ssh
-    chmod 700 /home/vagrant/.ssh
-    chmod 600 /home/vagrant/.ssh/authorized_keys
-  SHELL
+  # config.vm.provision "shell", inline: <<-SHELL
+  # SHELL
 end
